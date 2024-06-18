@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+</head>
+<body>
+    <h1>Меню</h1>
+    <button onclick="createProject()">Создать проект</button>
+    </br>
+    <button onclick="updateProject()">Изменить проект</button>
+    </br>
+    <button onclick="deleteProject()">Удалить проект</button>
+    <script>
+        function updateProject() {
+            window.location.href = 'updateProject.html'; // Переход на страницу изменения проекта
+        }
+
+        function createProject() {
+            window.location.href = 'createProject.html'; // Переход на страницу создания проекта
+        }
+
+        function deleteProject() {
+            window.location.href = 'deleteProject.html'; // Переход на страницу создания проекта
+        }
+    </script>
+</body>
+</html>

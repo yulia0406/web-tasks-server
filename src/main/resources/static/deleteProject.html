@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+</head>
+<body>
+<h1>Проект</h1>
+<hr/>
+<h2>Удалить проект</h2>
+<form action="localhost:8080/projects/delete" method="post">
+    № Проекта: <input type="number" name="id" id="id_project" />
+    <br/>
+    <input type="button" onclick="updateProject()" value="Удалить" />
+</form>
+
+<script>
+    async function updateProject() {
+        debugger;
+        let projectId = parseInt(document.getElementById('id_project').value);
+
+
+        const url = `http://localhost:8080/projects/delete/${projectId}`;
+        let response = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            }
+        });
+
+        switch (response.status) {
+            case 403:
+                alert('Нет прав');
+                break;
+            case 404:
+                alert('Проекта с указанным номером не существует');
+                break;
+            case 200:
+                console.log(response.status);
+                alert(`Проект удален`);
+                break;
+            default:
+                console.log(response.status);
+                alert(`Ошибка ${response.status}`);
+        }
+    }
+</script>
+</body>
+</html>

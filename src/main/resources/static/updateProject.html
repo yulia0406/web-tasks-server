@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+</head>
+<body>
+<h1>Проект</h1>
+<hr/>
+<h2>Изменить проект</h2>
+<form action="localhost:8080/projects/update" method="post">
+    № Проекта: <input type="text" name="id" id="id_project" />
+    <br/>
+    Название: <input type="text" name="projectName" id="project_name" />
+    <br/>
+    Описание: <input type="text" name="projectDescription" id="project_description" />
+    <br/>
+    Дата начала: <input type="text" name="startDate" id="start_date" />
+    <br/>
+    Дата окончания: <input type="text" name="endDate" id="end_date" />
+    <br/>
+    <input type="button" onclick="updateProject()" value="Изменить" />
+</form>
+
+<script>
+    async function updateProject() {
+        debugger;
+        let projectId = Number(document.getElementById('id_project').value);
+        let projectName = document.getElementById('project_name').value;
+        let projectDescription = document.getElementById('project_description').value;
+        let startDate = document.getElementById('start_date').value;
+        let endDate = document.getElementById('end_date').value;
+
+        let project = {
+            id: projectId,
+            projectName: projectName,
+            projectDescription: projectDescription,
+            startDate: startDate,
+            endDate: endDate,
+            tasks: []
+        };
+
+        const url = 'http://localhost:8080/projects/update';
+        let response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(project)
+        });
+
+        switch (response.status) {
+            case 403:
+                alert('Нет прав');
+                break;
+            case 404:
+                alert('Проекта с указанным номером не существует');
+                break;
+            case 200:
+                let result = await response.json();
+                alert(`Проект изменен\n№: ${result.id}\nНазвание: ${result.projectName}`);
+                break;
+            default:
+                alert(`Ошибка ${response.status}`);
+        }
+    }
+</script>
+</body>
+</html>
